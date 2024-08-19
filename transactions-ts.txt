@@ -1,0 +1,72 @@
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Transaction } from '../models/transaction.model';
+
+@Component({
+  selector: 'app-transaction',
+  standalone: true,
+  imports: [FormsModule, CommonModule],
+  templateUrl: './transaction.component.html',
+  styleUrls: ['./transaction.component.css'],
+  providers: [DatePipe]
+})
+export class TransactionComponent implements OnInit {
+  transactions: Transaction[] = [];
+  selectedDate: string = '';
+
+  constructor(
+    private http: HttpClient,
+    private datePipe: DatePipe
+  ) {}
+
+  ngOnInit(): void {
+    // Set default date to today's date
+    this.selectedDate = this.getTodayDate();
+    this.fetchTransactions();
+  }
+
+  fetchTransactions(): void {
+    const url = this.selectedDate
+      ? `http://195.100.100.80:3000/api/transactions?date=${this.selectedDate}`
+      : 'http://195.100.100.80:3000/api/transactions';
+
+    this.http.get<Transaction[]>(url).subscribe({
+      next: data => {
+        this.transactions = data.map(transaction => ({
+          ...transaction,
+          emp_code: this.extractEmpCode(transaction.photo),
+          punch_time: this.datePipe.transform(new Date(transaction.punch_time).toLocaleString('en-US', { timeZone: 'UTC' }), 'h:mm:ss a') || '',
+          upload_time: this.datePipe.transform(new Date(transaction.upload_time).toLocaleString('en-US', { timeZone: 'UTC' }), 'shortDate') || ''
+        }));
+      },
+      error: err => {
+        console.error('Error fetching transactions:', err);
+      }
+    });
+  }
+
+  onDateChange(): void {
+    this.fetchTransactions();
+  }
+
+  private getTodayDate(): string {
+    // Format today's date as YYYY-MM-DD
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  getPhotoUrl(photoFilename: string | undefined): string {
+    // Use the provided filename to construct the URL or use the placeholder image
+    return photoFilename ? `assets/images/${photoFilename}` : 'assets/images/nophoto.gif';
+  }
+
+  private extractEmpCode(photoFilename: string | undefined): string {
+    // Extract the employee code from the photo filename (assuming the filename format is "empcode.jpg")
+    return photoFilename ? photoFilename.split('.')[0] : '';
+  }
+}

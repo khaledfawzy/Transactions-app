@@ -1,3 +1,10 @@
-import { Routes } from '@angular/router';
+// src/app/app.routes.ts
 
-export const routes: Routes = [];
+import { Route } from '@angular/router';
+import { HomeComponent } from './home/home.component'; // Assuming HomeComponent is created
+import { TransactionComponent } from './transaction/transaction.component';
+
+export const routes: Route[] = [
+  { path: '', component: HomeComponent }, // Define HomeComponent if necessary
+  { path: 'transactions', component: TransactionComponent }
+];

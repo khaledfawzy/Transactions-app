@@ -1,0 +1,14 @@
+/* src/styles.css or src/app/navbar/navbar.component.css */
+.text-right {
+    text-align: right;
+  }
+  
+  .text-left {
+    text-align: left;
+  }
+  
+  /* Add any additional RTL styles if needed */
+  [dir="rtl"] {
+    /* Styles specific to RTL layout */
+  }
+  

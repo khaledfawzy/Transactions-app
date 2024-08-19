@@ -1,0 +1,14 @@
+<div class="transaction-list">
+    <div *ngFor="let transaction of transactions" class="transaction-item">
+      <div class="avatar-container">
+        <img [src]="getPhotoUrl(transaction.emp_code)" alt="Employee Photo" class="avatar-img" />
+      </div>
+      <div class="transaction-details">
+        <p><strong>Employee Code:</strong> {{ transaction.emp_code }}</p>
+        <p><strong>Punch Time:</strong> {{ transaction.punch_time }}</p>
+        <p><strong>Upload Time:</strong> {{ transaction.upload_time }}</p>
+        <!-- Add more details as needed -->
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,45 @@
+<div class="container mt-4">
+    <h1>Transactions</h1>
+    
+    <div class="form-group">
+      <label for="dateInput">Select Date</label>
+      <input
+        id="dateInput"
+        type="date"
+        class="form-control"
+        [(ngModel)]="selectedDate"
+        (change)="onDateChange()"
+      />
+    </div>
+    
+    <div *ngIf="transactions.length > 0" class="mt-4">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Employee Code</th>
+            <th>First Name</th>
+            <th>Nickname</th>
+            <th>Punch Time</th>
+            <th>Upload Time</th>
+            <th>Photo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaction of transactions">
+            <td>{{ transaction.emp_code }}</td>
+            <td>{{ transaction.first_name }}</td>
+            <td>{{ transaction.nickname }}</td>
+            <td>{{ transaction.punch_time }}</td>
+            <td>{{ transaction.upload_time }}</td>
+            <td>
+              <img [src]="getPhotoUrl(transaction.emp_code)" alt="Employee Photo" width="100"/>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="transactions.length === 0" class="mt-4">
+      <p>No records found</p>
+    </div>
+  </div>
+  

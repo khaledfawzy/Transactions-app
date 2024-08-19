@@ -1,0 +1,22 @@
+/* General styles and overrides */
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .navbar {
+    margin-bottom: 20px;
+  }
+  
+  .container {
+    max-width: 1200px;
+  }
+  
+  .list-group-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  img {
+    border-radius: 5px;
+  }
+  
