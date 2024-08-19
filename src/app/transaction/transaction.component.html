@@ -1,45 +1,40 @@
-<div class="transaction-container">
-  <!-- Date Picker -->
-  <div class="date-picker-container">
-    <label for="transaction-date">Select Date:</label>
+<div class="container mt-4">
+  <h2 class="mb-4">Employee Transactions</h2>
+
+  <div class="form-group mb-4">
+    <label for="datePicker">Select Date:</label>
     <input 
       type="date" 
-      id="transaction-date" 
+      id="datePicker" 
+      class="form-control" 
       [(ngModel)]="selectedDate" 
-      (change)="onDateChange()" 
-      class="date-picker"
-    />
+      (change)="onDateChange()" />
   </div>
 
-  <!-- Transactions List -->
-  <div class="transactions-list">
-    <table>
-      <thead>
-        <tr>
-          <th>Employee Code</th>
-          <th>First Name</th>
-          <th>Nickname</th>
-          <th>Punch Time</th>
-          <th>Upload Time</th>
-          <th>Photo</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let transaction of transactions">
-          <td>{{ transaction.emp_code }}</td>
-          <td>{{ transaction.first_name }}</td>
-          <td>{{ transaction.nickname }}</td>
-          <td>{{ transaction.punch_time| date:'shortTime'}}</td>
-          <td>{{ transaction.upload_time | date:'shortDate'}}</td>
-          <td>
-            <img 
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th>Employee</th>
+        <th>Date</th>
+        <th>In Time</th>
+        <th>Out Time</th>
+        <th>Photo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of transactions">
+        <td>{{ transaction.first_name }} {{ transaction.nickname }}</td>
+        <td>{{ transaction.tr_date | date }}</td>
+        <td>{{ transaction.in_time }}</td>
+        <td>{{ transaction.out_time }}</td>
+        <td>
+          <img 
             [src]="getPhotoUrl(transaction.emp_code)" 
-              alt="Employee Photo" 
-              class="employee-photo"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+            alt="Employee Photo" 
+            class="employee-photo"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
