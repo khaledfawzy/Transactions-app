@@ -1,18 +1,30 @@
-<!-- src/app/navbar/navbar.component.html -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Transaction App</a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/']">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/transactions']">Transactions</a>
-        </li>
-      </ul>
-      <button class="btn btn-primary" (click)="toggleDirection()">
-        {{ isArabic ? 'EN' : 'AR' }}
-      </button>
-    </div>
-  </nav>
-  
+  <!-- Company Logo and Brand Name -->
+  <a class="navbar-brand" href="#">
+    <img src="assets/images/company-logo.png" alt="Company Logo" class="logo-avatar">
+    Transaction App
+  </a>
+
+  <!-- Navbar Toggler for Mobile View -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar Links and Language Toggle Button -->
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <!-- Home Link -->
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/']">Home</a>
+      </li>
+      <!-- Transactions Link -->
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/transactions']">Transactions</a>
+      </li>
+    </ul>
+    <!-- Language Toggle Button -->
+    <button class="btn btn-primary ml-auto" (click)="toggleDirection()">
+      {{ isArabic ? 'EN' : 'AR' }}
+    </button>
+  </div>
+</nav>

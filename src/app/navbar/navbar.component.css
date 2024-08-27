@@ -1,14 +1,47 @@
-/* src/styles.css or src/app/navbar/navbar.component.css */
-.text-right {
-    text-align: right;
+  /* General Navbar Styles */
+  .navbar {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
   }
-  
-  .text-left {
-    text-align: left;
+
+  .navbar-brand {
+    font-weight: bold;
   }
-  
-  /* Add any additional RTL styles if needed */
-  [dir="rtl"] {
-    /* Styles specific to RTL layout */
+
+  .nav-link {
+    margin-right: 1rem;
+    transition: color 0.3s;
   }
-  
+
+  .nav-link:hover {
+    color: #0056b3;
+  }
+
+  .btn-primary {
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+
+  .btn-primary:hover {
+    background-color: #004085;
+    border-color: #003768;
+  }
+
+  /* RTL Support */
+  [dir="rtl"] .nav-link {
+    margin-left: 1rem;
+    margin-right: 0;
+  }
+
+  [dir="rtl"] .btn-primary {
+    margin-left: auto;
+    margin-right: 0;
+  }
+/* Styles for the company logo avatar */
+.logo-avatar {
+  width: 50px; /* Adjust the size as needed */
+  height: 50px;
+  border-radius: 50%; /* Makes the logo circular */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+  object-fit: cover; /* Ensures the image covers the entire circle without stretching */
+  margin-right: 10px; /* Adds some space between the logo and the brand name */
+}
