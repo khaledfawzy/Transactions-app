@@ -1,0 +1,15 @@
+{
+    "TRANSACTION_RECORDS": "Transaction Records",
+    "SELECT_DATE": "Select Date:",
+    "EMPLOYEE_CODE": "Employee Code",
+    "EMPLOYEE_NAME": "Employee Name",
+    "DATE": "Date",
+    "IN_TIME": "In Time",
+    "OUT_TIME": "Out Time",
+    "LATE": "Late",
+    "STATUS": "Status",
+    "EMAIL": "Email",
+    "ACTION": "Action",
+    "NICKNAME": "Nickname"
+  }
+  

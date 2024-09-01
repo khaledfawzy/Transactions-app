@@ -1,47 +1,93 @@
-  /* General Navbar Styles */
-  .navbar {
-    margin-bottom: 1rem;
-    padding: 0.5rem 1rem;
-  }
+/* General Navbar Styles */
+.navbar {
+  position: relative;
+  height: 100px; /* Adjust height as needed */
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #f8f9fa; /* Light background color for the navbar */
+  border-bottom: 1px solid #dee2e6; /* Border at the bottom of the navbar */
 
-  .navbar-brand {
-    font-weight: bold;
-  }
+  z-index: 1030; /* Make sure it stays above other content */
+}
+.navbar-light .navbar-nav .nav-link {
+  color: rgba(0, 0, 0, 0.5);
+}
+.navbar-light .navbar-nav .nav-link:hover {
+  color: rgba(0, 0, 0, 0.7);
+}
+.navbar-brand {
+  font-weight: bold;
+}
 
-  .nav-link {
-    margin-right: 1rem;
-    transition: color 0.3s;
-  }
+.nav-link {
+  margin-right: 1rem;
+  transition: color 0.3s;
+}
 
-  .nav-link:hover {
-    color: #0056b3;
-  }
+.nav-link:hover {
+  color: #0056b3;
+}
 
-  .btn-primary {
-    transition: background-color 0.3s, border-color 0.3s;
-  }
+.btn-primary {
+  transition: background-color 0.3s, border-color 0.3s;
+}
 
-  .btn-primary:hover {
-    background-color: #004085;
-    border-color: #003768;
-  }
+.btn-primary:hover {
+  background-color: #004085;
+  border-color: #003768;
+}
 
-  /* RTL Support */
-  [dir="rtl"] .nav-link {
-    margin-left: 1rem;
-    margin-right: 0;
-  }
+/* RTL Support */
+[dir="rtl"] .nav-link {
+  margin-left: 1rem;
+  margin-right: 0;
+}
 
-  [dir="rtl"] .btn-primary {
-    margin-left: auto;
-    margin-right: 0;
-  }
+[dir="rtl"] .btn-primary {
+  margin-left: auto;
+  margin-right: 0;
+}
+
 /* Styles for the company logo avatar */
 .logo-avatar {
-  width: 50px; /* Adjust the size as needed */
+  width: 50px; /* Adjust size as needed */
   height: 50px;
   border-radius: 50%; /* Makes the logo circular */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
   object-fit: cover; /* Ensures the image covers the entire circle without stretching */
-  margin-right: 10px; /* Adds some space between the logo and the brand name */
+  margin-right: 10px; /* Adds space between the logo and brand name */
+}
+
+/* Remove background images */
+.navbar::before,
+.navbar::after {
+  content: none; /* Remove background images */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+  .navbar {
+    height: auto; /* Adjust height for mobile view */
+  }
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+  }
+
+  .logo-avatar {
+    width: 40px; /* Adjust size for mobile view */
+    height: 40px;
+    margin-right: 8px;
+  }
+}
+
+/* Ensure the content is on top of the images */
+.container {
+  position: relative;
+  z-index: 2; /* Ensure the content is on top of the images */
+}
+body {
+  padding-top: 56px; /* Adjust this value based on the height of your navbar */
 }

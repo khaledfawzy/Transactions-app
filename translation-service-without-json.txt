@@ -1,0 +1,27 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TranslationService {
+  private currentLang = new BehaviorSubject<string>('en'); // Default language
+  currentLang$ = this.currentLang.asObservable();
+
+  private translations: { [key: string]: { [lang: string]: string } } = {
+    'WELCOME': { 'en': 'Welcome', 'ar': 'مرحبا' },
+    'TRANSACTION_RECORDS': { 'en': 'Transaction Records', 'ar': 'سجلات المعاملات' },
+    // Add more translations as needed
+  };
+
+  constructor() {}
+
+  setLanguage(lang: string): void {
+    this.currentLang.next(lang);
+  }
+
+  getTranslation(key: string): string {
+    const lang = this.currentLang.getValue();
+    return this.translations[key] ? this.translations[key][lang] : key;
+  }
+}

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { TranslationService } from '../shared/translation.service'; // Import the service
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { EmailComponent } from '../email/email.component'; // Import EmailComponent
+import { EmailComponent } from '../email/email.component';
+import { TranslatePipe } from '../shared/translation.pipe'; // Import the pipe
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-transaction',
@@ -10,7 +13,8 @@ import { EmailComponent } from '../email/email.component'; // Import EmailCompon
   imports: [
     CommonModule,
     FormsModule,
-    EmailComponent // Include EmailComponent
+    EmailComponent,
+    TranslatePipe // Import the pipe here
   ],
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.css']
@@ -18,12 +22,19 @@ import { EmailComponent } from '../email/email.component'; // Import EmailCompon
 export class TransactionComponent implements OnInit {
   transactions: any[] = [];
   selectedDate: string = '';
+  isArabic: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private translationService: TranslationService) {}
 
   ngOnInit(): void {
     this.selectedDate = this.getTodayDate();
     this.fetchTransactions();
+
+    // Subscribe to language changes
+    this.translationService.currentLang$.subscribe((lang) => {
+      this.isArabic = lang === 'ar';
+      // Optionally refetch transactions or handle language change
+    });
   }
 
   fetchTransactions(): void {
@@ -33,8 +44,8 @@ export class TransactionComponent implements OnInit {
 
     this.http.get<any[]>(url).subscribe({
       next: data => {
-        console.log('Fetched transactions:', data); // Log data for debugging
-        this.transactions = this.groupTransactions(data);
+        console.log('Fetched transactions:', data);
+        this.transactions = this.processTransactions(data);
       },
       error: err => {
         console.error('Error fetching transactions:', err);
@@ -51,53 +62,43 @@ export class TransactionComponent implements OnInit {
     const yyyy = today.getFullYear();
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const dd = String(today.getDate()).padStart(2, '0');
-    return `${yyyy}-${mm}-${dd}`;
+    return formatDate(today, 'yyyy-MM-dd', 'en-US'); // Use Angular's formatDate
   }
 
-  getPhotoUrl(empCode: string): string {
-    const photoFilename = empCode ? `${empCode}.jpg` : 'noimage.gif';
-    const url = `assets/images/${photoFilename}`;
-    return url;
+  private processTransactions(data: any[]): any[] {
+    const processedTransactions: any[] = data.map(transaction => {
+      const inTime = this.parseTime(transaction.in_time);
+      const outTime = this.parseTime(transaction.out_time);
+      const expectedInTime = this.parseTime("08:30:00"); // Assuming 8 AM is the expected start time
+
+      const late = inTime > expectedInTime ? this.calculateDuration(expectedInTime, inTime) : '00:00:00';
+      const totalDuration = inTime && outTime ? this.calculateDuration(inTime, outTime) : '00:00:00';
+      const status = late > '00:00:00' ? 'Late' : 'On Time';
+
+      return {
+        ...transaction,
+        tr_date: formatDate(transaction.tr_date, 'yyyy-MM-dd', 'en-US'), // Format the transaction date
+        late,
+        status
+      };
+    });
+
+    console.log('Processed transactions:', processedTransactions);
+    return processedTransactions;
   }
 
-  private groupTransactions(data: any[]): any[] {
-    const groupedTransactions: any[] = [];
-    const transactionMap = new Map<string, any>();
+  private parseTime(timeString: string): Date {
+    const [hours, minutes, seconds] = timeString.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours, minutes, seconds, 0);
+    return date;
+  }
 
-    data.forEach(transaction => {
-      const key = `${transaction.emp_code}-${transaction.tr_date}`;
-
-      if (!transactionMap.has(key)) {
-        transactionMap.set(key, {
-          emp_code: transaction.emp_code,
-          tr_date: transaction.tr_date,
-          first_name: transaction.first_name,
-          nickname: transaction.nickname,
-          in_time: transaction.in_time.substring(0, 8), // Only show HH:MM:SS
-          out_time: transaction.out_time.substring(0, 8), // Only show HH:MM:SS
-          email: transaction.email // Add email to the transaction
-        });
-      } else {
-        const existingTransaction = transactionMap.get(key);
-
-        if (transaction.punch_time < existingTransaction.in_time) {
-          existingTransaction.in_time = transaction.punch_time.substring(0, 8);
-        }
-        if (transaction.punch_time > existingTransaction.out_time) {
-          existingTransaction.out_time = transaction.punch_time.substring(0, 8);
-        }
-      }
-    });
-
-    transactionMap.forEach(value => {
-      if (value.in_time === value.out_time) {
-        value.out_time = '00:00:00';
-      }
-      groupedTransactions.push(value);
-    });
-
-    console.log('Grouped transactions:', groupedTransactions); // Log grouped transactions for debugging
-
-    return groupedTransactions;
+  private calculateDuration(start: Date, end: Date): string {
+    const diffMs = end.getTime() - start.getTime();
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   }
 }

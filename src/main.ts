@@ -1,16 +1,12 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app/app.component';
-import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
-
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(
-      HttpClientModule,
-      RouterModule.forRoot(routes)
-    ), 
+    provideHttpClient(),  // Provide HttpClient in the standalone app
+    provideRouter(routes) // Provide routing if you have routes
   ]
 }).catch(err => console.error(err));

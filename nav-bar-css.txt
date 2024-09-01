@@ -1,0 +1,82 @@
+  /* General Navbar Styles */
+  .navbar {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-brand {
+    font-weight: bold;
+  }
+
+  .nav-link {
+    margin-right: 1rem;
+    transition: color 0.3s;
+  }
+
+  .nav-link:hover {
+    color: #0056b3;
+  }
+
+  .btn-primary {
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+
+  .btn-primary:hover {
+    background-color: #004085;
+    border-color: #003768;
+  }
+
+  /* RTL Support */
+  [dir="rtl"] .nav-link {
+    margin-left: 1rem;
+    margin-right: 0;
+  }
+
+  [dir="rtl"] .btn-primary {
+    margin-left: auto;
+    margin-right: 0;
+  }
+/* Styles for the company logo avatar */
+.logo-avatar {
+  width: 50px; /* Adjust the size as needed */
+  height: 50px;
+  border-radius: 50%; /* Makes the logo circular */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+  object-fit: cover; /* Ensures the image covers the entire circle without stretching */
+  margin-right: 10px; /* Adds some space between the logo and the brand name */
+}
+/* navbar.component.css */
+.navbar {
+  position: relative;
+  height: 100px; /* Adjust height as needed */
+  background-color: transparent; /* Ensure background is transparent to show images */
+}
+
+.navbar::before,
+.navbar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 1; /* Make sure the images are behind the content */
+}
+
+.navbar::before {
+  background-image: url('/assets/images/background-image.jpg'); /* Bottom image */
+  z-index: 0; /* Bottom image */
+}
+
+.navbar::after {
+  background-image: url('/assets/images/overlay-image1.png'); /* Top image */
+  z-index: 1; /* Top image */
+  opacity: 0.8; /* Adjust opacity if needed */
+}
+
+.container {
+  position: relative;
+  z-index: 2; /* Ensure the content is on top of the images */
+}

@@ -1,0 +1,9 @@
+alerts used in angular 
+<div calss="alert alert-danger">
+ <ul calss="m-0">
+	<li>input is required </li>
+	<li>input must not exceed 20 characters</li>
+	<li>input must not exceed 20 characters</li>
+	<li>please enter a vaild email address</li>
+	<li>custom field should match the pattern</li>
+	<li>password don't match</li>

@@ -1,0 +1,15 @@
+{
+    "TRANSACTION_RECORDS": "سجلات المعاملات",
+    "SELECT_DATE": "اختر التاريخ:",
+    "EMPLOYEE_CODE": "رمز الموظف",
+    "EMPLOYEE_NAME": "اسم الموظف",
+    "DATE": "تاريخ",
+    "IN_TIME": "وقت الدخول",
+    "OUT_TIME": "وقت الخروج",
+    "LATE": "متأخر",
+    "STATUS": "الحالة",
+    "EMAIL": "البريد الإلكتروني",
+    "ACTION": "الإجراء",
+    "NICKNAME": "الكنية"
+  }
+  

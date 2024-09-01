@@ -3,6 +3,7 @@
 import { Route } from '@angular/router';
 import { HomeComponent } from './home/home.component'; // Assuming HomeComponent is created
 import { TransactionComponent } from './transaction/transaction.component';
+//import { HttpClientModule } from '@angular/common/http';
 
 export const routes: Route[] = [
   { path: '', component: HomeComponent }, // Define HomeComponent if necessary
